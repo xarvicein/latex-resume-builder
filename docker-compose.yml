@@ -11,7 +11,7 @@ services:
       # nginx (the "client" service below) proxies /api same-origin, so browsers never
       # call this server directly in the Docker setup — but keep CORS open for local
       # debugging (e.g. hitting http://localhost:4000/api directly).
-      CLIENT_ORIGIN: "http://localhost:8080"
+      CLIENT_ORIGIN: "https://latex.xarvice.com"
     ports:
       - "4000:4000" # optional: lets you curl the API directly from the host
     healthcheck:
