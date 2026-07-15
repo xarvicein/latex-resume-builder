@@ -1,8 +1,13 @@
 FROM node:20-bookworm-slim AS base
 
-# --- system deps + Tectonic (self-contained LaTeX engine, no TeX Live needed) ---
+# --- Tectonic (self-contained LaTeX *binary*, no TeX Live needed) ---
+# curl/xz-utils are only needed to fetch+extract the binary, so they get purged after.
+# libgraphite2/libharfbuzz/libfontconfig/libicu are dynamic libraries tectonic links
+# against at *runtime* to do text shaping/font handling — these must stay installed,
+# or tectonic fails at startup with "error while loading shared libraries".
 RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates curl xz-utils \
+      libgraphite2-3 libharfbuzz0b libfontconfig1 libicu72 libssl3 zlib1g \
     && curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh \
     && mv tectonic /usr/local/bin/tectonic \
     && apt-get purge -y curl xz-utils \
