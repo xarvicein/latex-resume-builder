@@ -38,6 +38,14 @@ export function generateCompactLatex(data: ResumeData): string {
     .map((s) => `\\textbf{${escapeLatex(s.category)}:} ${s.items.map(escapeLatex).join(", ")}`)
     .join(" \\quad ");
 
+  const customSections = (data.customSections ?? [])
+    .filter((sec) => sec.title.trim())
+    .map((sec) => {
+      const bullets = sec.bullets.filter(Boolean).map((b) => `\\item ${escapeLatex(b)}`).join("\n");
+      return `\\section{${escapeLatex(sec.title)}}\n\\begin{itemize}\n${bullets}\n\\end{itemize}`;
+    })
+    .join("\n");
+
   return `%% Auto-generated resume - Compact template
 \\documentclass[9.5pt,letterpaper]{article}
 \\usepackage[margin=0.5in]{geometry}
@@ -61,6 +69,8 @@ ${data.experience.length ? `\\section{Experience}\n\\begin{itemize}\n${experienc
 ${data.projects.length ? `\\section{Projects}\n\\begin{itemize}\n${projects}\n\\end{itemize}` : ""}
 ${data.education.length ? `\\section{Education}\n\\begin{itemize}\n${education}\n\\end{itemize}` : ""}
 ${data.skills.length ? `\\section{Skills}\n\\footnotesize ${skills}` : ""}
+
+${customSections}
 
 \\end{document}
 `;

@@ -50,6 +50,7 @@ export interface ResumeData {
   experience: ResumeExperience[];
   projects: ResumeProject[];
   skills: ResumeSkillGroup[];
+  customSections: ResumeCustomSection[];
 }
 
 export type TemplateId = "classic" | "modern" | "compact";
@@ -74,4 +75,10 @@ export interface CompileRequestBody {
 export interface CompileErrorDetail {
   line?: number;
   message: string;
+}
+
+export interface ResumeCustomSection {
+  id: string;
+  title: string;
+  bullets: string[];
 }

@@ -50,6 +50,14 @@ ${bullets ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets
     .map((s) => `\\textbf{${escapeLatex(s.category)}:} ${s.items.map(escapeLatex).join(", ")}\\\\[2pt]`)
     .join("\n");
 
+  const customSections = (data.customSections ?? [])
+    .filter((sec) => sec.title.trim())
+    .map((sec) => {
+      const bullets = sec.bullets.filter(Boolean).map((b) => `  \\item ${escapeLatex(b)}`).join("\n");
+      return section(sec.title, bullets ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets}\n\\end{itemize}` : "");
+    })
+    .join("\n");
+
   return `%% Auto-generated resume - Modern template
 \\documentclass[10.5pt,letterpaper]{article}
 \\usepackage[margin=0.75in]{geometry}
@@ -75,6 +83,7 @@ ${section("Experience", experience)}
 ${section("Projects", projects)}
 ${section("Education", education)}
 ${section("Skills", skills)}
+${customSections}
 
 \\end{document}
 `;

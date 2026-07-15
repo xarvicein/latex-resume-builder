@@ -80,4 +80,11 @@ export const sampleResumeData: ResumeData = {
     { id: "skill2", category: "Frameworks", items: ["React", "Express", "Django"] },
     { id: "skill3", category: "Tools", items: ["Docker", "PostgreSQL", "AWS"] },
   ],
+  customSections: [
+    {
+      id: "cs1",
+      title: "Certifications",
+      bullets: ["AWS Certified Solutions Architect – Associate", "Certified Kubernetes Administrator (CKA)"],
+    },
+  ],
 };

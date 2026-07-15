@@ -9,6 +9,7 @@ import {
   ResumeProject,
   ResumeSkillGroup,
   TemplateId,
+  ResumeCustomSection 
 } from "../types";
 import { compileLatex as compileLatexApi, generateLatex } from "../api/client";
 
@@ -57,6 +58,10 @@ interface ResumeStore {
 
   // --- compiling ---
   compileCurrentLatex: () => Promise<void>;
+
+  addCustomSection: () => void;
+  updateCustomSection: (id: string, patch: Partial<ResumeCustomSection>) => void;
+  removeCustomSection: (id: string) => void;
 }
 
 /** Marks the resume dirty and bumps updatedAt; used by every mutator below. */
@@ -173,6 +178,30 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
       if (!s.resume) return s;
       const skills = s.resume.data.skills.filter((sk) => sk.id !== id);
       return { resume: touch({ ...s.resume, data: { ...s.resume.data, skills }, isCustomLatex: false }) };
+    }),
+    addCustomSection: () =>
+    set((s) => {
+      if (!s.resume) return s;
+      const entry: ResumeCustomSection = { id: nanoid(), title: "", bullets: [""] };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, customSections: [...s.resume.data.customSections, entry] },
+          isCustomLatex: false,
+        }),
+      };
+    }),
+  updateCustomSection: (id, patch) =>
+    set((s) => {
+      if (!s.resume) return s;
+      const customSections = s.resume.data.customSections.map((sec) => (sec.id === id ? { ...sec, ...patch } : sec));
+      return { resume: touch({ ...s.resume, data: { ...s.resume.data, customSections }, isCustomLatex: false }) };
+    }),
+  removeCustomSection: (id) =>
+    set((s) => {
+      if (!s.resume) return s;
+      const customSections = s.resume.data.customSections.filter((sec) => sec.id !== id);
+      return { resume: touch({ ...s.resume, data: { ...s.resume.data, customSections }, isCustomLatex: false }) };
     }),
 
   setLatexSource: (latex) =>

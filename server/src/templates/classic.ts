@@ -82,6 +82,18 @@ ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
     )
     .join("\n");
 
+  const customSectionsBlock = (data.customSections ?? [])
+    .filter((sec) => sec.title.trim())
+    .map((sec) => {
+      const bullets = sec.bullets
+        .filter(Boolean)
+        .map((b) => `  \\item ${escapeLatex(b)}`)
+        .join("\n");
+      return `\\section{${escapeLatex(sec.title)}}
+${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
+    })
+    .join("\n\n");
+
   return `%% Auto-generated resume - Classic template
 %% You can edit this LaTeX directly; it will stop auto-syncing with the form.
 \\documentclass[letterpaper,10.5pt]{article}
@@ -188,6 +200,8 @@ ${educationBlock}
 \\resumeSubHeadingListEnd`
     : ""
 }
+
+${customSectionsBlock}
 
 \\end{document}
 `;
