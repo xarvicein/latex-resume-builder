@@ -27,7 +27,9 @@ const resumes = new Map<string, Resume>();
 })();
 
 router.get("/", (_req, res) => {
-  res.json({ resumes: Array.from(resumes.values()).map(({ latex, ...meta }) => meta) });
+  res.json({
+    resumes: Array.from(resumes.values()).map(({ latex, ...meta }) => meta),
+  });
 });
 
 router.get("/:id", (req, res) => {
@@ -37,10 +39,14 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { name, templateId } = req.body as { name?: string; templateId?: TemplateId };
+  const { name, templateId } = req.body as {
+    name?: string;
+    templateId?: TemplateId;
+  };
   const id = nanoid();
   const now = new Date().toISOString();
-  const tpl: TemplateId = templateId && generators[templateId] ? templateId : "classic";
+  const tpl: TemplateId =
+    templateId && generators[templateId] ? templateId : "classic";
   const data = sampleResumeData;
 
   const resume: Resume = {
@@ -74,7 +80,8 @@ router.put("/:id", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  if (!resumes.has(req.params.id)) return res.status(404).json({ error: "Resume not found." });
+  if (!resumes.has(req.params.id))
+    return res.status(404).json({ error: "Resume not found." });
   resumes.delete(req.params.id);
   res.status(204).send();
 });

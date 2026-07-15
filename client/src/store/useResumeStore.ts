@@ -9,7 +9,7 @@ import {
   ResumeProject,
   ResumeSkillGroup,
   TemplateId,
-  ResumeCustomSection 
+  ResumeCustomSection,
 } from "../types";
 import { compileLatex as compileLatexApi, generateLatex } from "../api/client";
 
@@ -60,7 +60,10 @@ interface ResumeStore {
   compileCurrentLatex: () => Promise<void>;
 
   addCustomSection: () => void;
-  updateCustomSection: (id: string, patch: Partial<ResumeCustomSection>) => void;
+  updateCustomSection: (
+    id: string,
+    patch: Partial<ResumeCustomSection>,
+  ) => void;
   removeCustomSection: (id: string) => void;
 }
 
@@ -77,116 +80,234 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
   compileErrors: [],
   compileLog: null,
 
-  loadResume: (resume) => set({ resume, pdfUrl: null, compileErrors: [], compileLog: null }),
+  loadResume: (resume) =>
+    set({ resume, pdfUrl: null, compileErrors: [], compileLog: null }),
 
   setEditorMode: (mode) => set({ editorMode: mode }),
 
   updateContact: (patch) =>
     set((s) => {
       if (!s.resume) return s;
-      const data = { ...s.resume.data, contact: { ...s.resume.data.contact, ...patch } };
+      const data = {
+        ...s.resume.data,
+        contact: { ...s.resume.data.contact, ...patch },
+      };
       return { resume: touch({ ...s.resume, data, isCustomLatex: false }) };
     }),
 
   updateSummary: (summary) =>
     set((s) => {
       if (!s.resume) return s;
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, summary }, isCustomLatex: false }) };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, summary },
+          isCustomLatex: false,
+        }),
+      };
     }),
 
   setTemplate: (templateId) =>
     set((s) => {
       if (!s.resume) return s;
-      return { resume: touch({ ...s.resume, templateId, isCustomLatex: false }) };
+      return {
+        resume: touch({ ...s.resume, templateId, isCustomLatex: false }),
+      };
     }),
 
   addEducation: () =>
     set((s) => {
       if (!s.resume) return s;
-      const entry: ResumeEducation = { id: nanoid(), school: "", degree: "", startDate: "", endDate: "", details: [] };
+      const entry: ResumeEducation = {
+        id: nanoid(),
+        school: "",
+        degree: "",
+        startDate: "",
+        endDate: "",
+        details: [],
+      };
       return {
-        resume: touch({ ...s.resume, data: { ...s.resume.data, education: [...s.resume.data.education, entry] }, isCustomLatex: false }),
+        resume: touch({
+          ...s.resume,
+          data: {
+            ...s.resume.data,
+            education: [...s.resume.data.education, entry],
+          },
+          isCustomLatex: false,
+        }),
       };
     }),
   updateEducation: (id, patch) =>
     set((s) => {
       if (!s.resume) return s;
-      const education = s.resume.data.education.map((e) => (e.id === id ? { ...e, ...patch } : e));
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, education }, isCustomLatex: false }) };
+      const education = s.resume.data.education.map((e) =>
+        e.id === id ? { ...e, ...patch } : e,
+      );
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, education },
+          isCustomLatex: false,
+        }),
+      };
     }),
   removeEducation: (id) =>
     set((s) => {
       if (!s.resume) return s;
       const education = s.resume.data.education.filter((e) => e.id !== id);
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, education }, isCustomLatex: false }) };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, education },
+          isCustomLatex: false,
+        }),
+      };
     }),
 
   addExperience: () =>
     set((s) => {
       if (!s.resume) return s;
-      const entry: ResumeExperience = { id: nanoid(), company: "", role: "", startDate: "", endDate: "", bullets: [""] };
+      const entry: ResumeExperience = {
+        id: nanoid(),
+        company: "",
+        role: "",
+        startDate: "",
+        endDate: "",
+        bullets: [""],
+      };
       return {
-        resume: touch({ ...s.resume, data: { ...s.resume.data, experience: [...s.resume.data.experience, entry] }, isCustomLatex: false }),
+        resume: touch({
+          ...s.resume,
+          data: {
+            ...s.resume.data,
+            experience: [...s.resume.data.experience, entry],
+          },
+          isCustomLatex: false,
+        }),
       };
     }),
   updateExperience: (id, patch) =>
     set((s) => {
       if (!s.resume) return s;
-      const experience = s.resume.data.experience.map((e) => (e.id === id ? { ...e, ...patch } : e));
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, experience }, isCustomLatex: false }) };
+      const experience = s.resume.data.experience.map((e) =>
+        e.id === id ? { ...e, ...patch } : e,
+      );
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, experience },
+          isCustomLatex: false,
+        }),
+      };
     }),
   removeExperience: (id) =>
     set((s) => {
       if (!s.resume) return s;
       const experience = s.resume.data.experience.filter((e) => e.id !== id);
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, experience }, isCustomLatex: false }) };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, experience },
+          isCustomLatex: false,
+        }),
+      };
     }),
 
   addProject: () =>
     set((s) => {
       if (!s.resume) return s;
       const entry: ResumeProject = { id: nanoid(), name: "", bullets: [""] };
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, projects: [...s.resume.data.projects, entry] }, isCustomLatex: false }) };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: {
+            ...s.resume.data,
+            projects: [...s.resume.data.projects, entry],
+          },
+          isCustomLatex: false,
+        }),
+      };
     }),
   updateProject: (id, patch) =>
     set((s) => {
       if (!s.resume) return s;
-      const projects = s.resume.data.projects.map((p) => (p.id === id ? { ...p, ...patch } : p));
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, projects }, isCustomLatex: false }) };
+      const projects = s.resume.data.projects.map((p) =>
+        p.id === id ? { ...p, ...patch } : p,
+      );
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, projects },
+          isCustomLatex: false,
+        }),
+      };
     }),
   removeProject: (id) =>
     set((s) => {
       if (!s.resume) return s;
       const projects = s.resume.data.projects.filter((p) => p.id !== id);
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, projects }, isCustomLatex: false }) };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, projects },
+          isCustomLatex: false,
+        }),
+      };
     }),
 
   addSkillGroup: () =>
     set((s) => {
       if (!s.resume) return s;
       const entry: ResumeSkillGroup = { id: nanoid(), category: "", items: [] };
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, skills: [...s.resume.data.skills, entry] }, isCustomLatex: false }) };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, skills: [...s.resume.data.skills, entry] },
+          isCustomLatex: false,
+        }),
+      };
     }),
   updateSkillGroup: (id, patch) =>
     set((s) => {
       if (!s.resume) return s;
-      const skills = s.resume.data.skills.map((sk) => (sk.id === id ? { ...sk, ...patch } : sk));
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, skills }, isCustomLatex: false }) };
+      const skills = s.resume.data.skills.map((sk) =>
+        sk.id === id ? { ...sk, ...patch } : sk,
+      );
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, skills },
+          isCustomLatex: false,
+        }),
+      };
     }),
   removeSkillGroup: (id) =>
     set((s) => {
       if (!s.resume) return s;
       const skills = s.resume.data.skills.filter((sk) => sk.id !== id);
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, skills }, isCustomLatex: false }) };
-    }),
-    addCustomSection: () =>
-    set((s) => {
-      if (!s.resume) return s;
-      const entry: ResumeCustomSection = { id: nanoid(), title: "", bullets: [""] };
       return {
         resume: touch({
           ...s.resume,
-          data: { ...s.resume.data, customSections: [...s.resume.data.customSections, entry] },
+          data: { ...s.resume.data, skills },
+          isCustomLatex: false,
+        }),
+      };
+    }),
+  addCustomSection: () =>
+    set((s) => {
+      if (!s.resume) return s;
+      const entry: ResumeCustomSection = {
+        id: nanoid(),
+        title: "",
+        bullets: [""],
+      };
+      return {
+        resume: touch({
+          ...s.resume,
+          data: {
+            ...s.resume.data,
+            customSections: [...s.resume.data.customSections, entry],
+          },
           isCustomLatex: false,
         }),
       };
@@ -194,14 +315,30 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
   updateCustomSection: (id, patch) =>
     set((s) => {
       if (!s.resume) return s;
-      const customSections = s.resume.data.customSections.map((sec) => (sec.id === id ? { ...sec, ...patch } : sec));
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, customSections }, isCustomLatex: false }) };
+      const customSections = s.resume.data.customSections.map((sec) =>
+        sec.id === id ? { ...sec, ...patch } : sec,
+      );
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, customSections },
+          isCustomLatex: false,
+        }),
+      };
     }),
   removeCustomSection: (id) =>
     set((s) => {
       if (!s.resume) return s;
-      const customSections = s.resume.data.customSections.filter((sec) => sec.id !== id);
-      return { resume: touch({ ...s.resume, data: { ...s.resume.data, customSections }, isCustomLatex: false }) };
+      const customSections = s.resume.data.customSections.filter(
+        (sec) => sec.id !== id,
+      );
+      return {
+        resume: touch({
+          ...s.resume,
+          data: { ...s.resume.data, customSections },
+          isCustomLatex: false,
+        }),
+      };
     }),
 
   setLatexSource: (latex) =>
@@ -214,7 +351,11 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
     const { resume } = get();
     if (!resume) return;
     const latex = await generateLatex(resume.templateId, resume.data);
-    set((s) => (s.resume ? { resume: touch({ ...s.resume, latex, isCustomLatex: false }) } : s));
+    set((s) =>
+      s.resume
+        ? { resume: touch({ ...s.resume, latex, isCustomLatex: false }) }
+        : s,
+    );
   },
 
   compileCurrentLatex: async () => {
@@ -224,7 +365,7 @@ export const useResumeStore = create<ResumeStore>((set, get) => ({
     const outcome = await compileLatexApi(resume.latex);
     set((s) => ({
       isCompiling: false,
-      pdfUrl: outcome.success ? outcome.pdfBlobUrl ?? null : s.pdfUrl,
+      pdfUrl: outcome.success ? (outcome.pdfBlobUrl ?? null) : s.pdfUrl,
       compileErrors: outcome.errors ?? [],
       compileLog: outcome.log ?? null,
     }));

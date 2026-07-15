@@ -24,10 +24,17 @@ app.use((req, res) => {
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error(err);
-  res.status(500).json({ error: "Internal server error." });
-});
+app.use(
+  (
+    err: any,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction,
+  ) => {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error." });
+  },
+);
 
 app.listen(PORT, () => {
   console.log(`Resume builder API listening on http://localhost:${PORT}`);

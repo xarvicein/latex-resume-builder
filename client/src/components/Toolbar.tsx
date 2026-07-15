@@ -12,7 +12,9 @@ export default function Toolbar() {
   const editorMode = useResumeStore((s) => s.editorMode);
   const setEditorMode = useResumeStore((s) => s.setEditorMode);
   const setTemplate = useResumeStore((s) => s.setTemplate);
-  const regenerateLatexFromData = useResumeStore((s) => s.regenerateLatexFromData);
+  const regenerateLatexFromData = useResumeStore(
+    (s) => s.regenerateLatexFromData,
+  );
   const compileCurrentLatex = useResumeStore((s) => s.compileCurrentLatex);
   const isCompiling = useResumeStore((s) => s.isCompiling);
   const pdfUrl = useResumeStore((s) => s.pdfUrl);
@@ -27,16 +29,24 @@ export default function Toolbar() {
   return (
     <header className="toolbar">
       <div className="toolbar-left">
-        <span className="brand">Resume<span className="brand-accent">TeX</span></span>
+        <span className="brand">
+          Resume<span className="brand-accent">TeX</span>
+        </span>
         <span className="resume-name">{resume.name}</span>
       </div>
 
       <div className="toolbar-center">
         <div className="segmented">
-          <button className={editorMode === "form" ? "active" : ""} onClick={() => setEditorMode("form")}>
+          <button
+            className={editorMode === "form" ? "active" : ""}
+            onClick={() => setEditorMode("form")}
+          >
             Form
           </button>
-          <button className={editorMode === "latex" ? "active" : ""} onClick={() => setEditorMode("latex")}>
+          <button
+            className={editorMode === "latex" ? "active" : ""}
+            onClick={() => setEditorMode("latex")}
+          >
             LaTeX
           </button>
         </div>
@@ -55,7 +65,11 @@ export default function Toolbar() {
       </div>
 
       <div className="toolbar-right">
-        <button className="btn btn-primary" onClick={() => compileCurrentLatex()} disabled={isCompiling}>
+        <button
+          className="btn btn-primary"
+          onClick={() => compileCurrentLatex()}
+          disabled={isCompiling}
+        >
           {isCompiling ? "Compiling…" : "Compile ▶"}
         </button>
         <a

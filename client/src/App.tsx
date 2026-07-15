@@ -16,11 +16,15 @@ export default function App() {
     (async () => {
       try {
         const list = await fetchResumes();
-        const first = list[0] ?? (await createResume("My First Resume", "classic"));
-        const full = "latex" in first ? (first as any) : await fetchResume(first.id);
+        const first =
+          list[0] ?? (await createResume("My First Resume", "classic"));
+        const full =
+          "latex" in first ? (first as any) : await fetchResume(first.id);
         loadResume(full);
       } catch (err: any) {
-        setLoadError("Couldn't reach the API server. Is the Express backend running on port 4000?");
+        setLoadError(
+          "Couldn't reach the API server. Is the Express backend running on port 4000?",
+        );
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,7 +34,10 @@ export default function App() {
     return (
       <div className="app-error">
         <h2>⚠️ {loadError}</h2>
-        <p>Run <code>npm run dev</code> inside <code>/server</code>, then reload this page.</p>
+        <p>
+          Run <code>npm run dev</code> inside <code>/server</code>, then reload
+          this page.
+        </p>
       </div>
     );
   }
@@ -48,7 +55,9 @@ export default function App() {
     <div className="app-shell">
       <Toolbar />
       <main className="app-main">
-        <div className="editor-pane">{editorMode === "form" ? <FormEditor /> : <LatexEditor />}</div>
+        <div className="editor-pane">
+          {editorMode === "form" ? <FormEditor /> : <LatexEditor />}
+        </div>
         <PreviewPane />
       </main>
     </div>

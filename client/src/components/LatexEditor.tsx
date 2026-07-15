@@ -4,7 +4,9 @@ import { useResumeStore } from "../store/useResumeStore";
 export default function LatexEditor() {
   const resume = useResumeStore((s) => s.resume);
   const setLatexSource = useResumeStore((s) => s.setLatexSource);
-  const regenerateLatexFromData = useResumeStore((s) => s.regenerateLatexFromData);
+  const regenerateLatexFromData = useResumeStore(
+    (s) => s.regenerateLatexFromData,
+  );
 
   if (!resume) return null;
 
@@ -13,7 +15,10 @@ export default function LatexEditor() {
       {resume.isCustomLatex && (
         <div className="latex-banner">
           You've hand-edited the LaTeX, so it's no longer synced with the form.{" "}
-          <button className="link-btn" onClick={() => regenerateLatexFromData()}>
+          <button
+            className="link-btn"
+            onClick={() => regenerateLatexFromData()}
+          >
             Regenerate from form
           </button>
         </div>

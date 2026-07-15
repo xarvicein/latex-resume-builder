@@ -13,8 +13,14 @@ export async function fetchSampleData(): Promise<ResumeData> {
   return data.data;
 }
 
-export async function generateLatex(templateId: TemplateId, resumeData: ResumeData): Promise<string> {
-  const { data } = await api.post(`/templates/${templateId}/generate`, resumeData);
+export async function generateLatex(
+  templateId: TemplateId,
+  resumeData: ResumeData,
+): Promise<string> {
+  const { data } = await api.post(
+    `/templates/${templateId}/generate`,
+    resumeData,
+  );
   return data.latex;
 }
 
@@ -28,12 +34,18 @@ export async function fetchResume(id: string): Promise<Resume> {
   return data.resume;
 }
 
-export async function createResume(name: string, templateId: TemplateId): Promise<Resume> {
+export async function createResume(
+  name: string,
+  templateId: TemplateId,
+): Promise<Resume> {
   const { data } = await api.post("/resumes", { name, templateId });
   return data.resume;
 }
 
-export async function updateResume(id: string, patch: Partial<Resume>): Promise<Resume> {
+export async function updateResume(
+  id: string,
+  patch: Partial<Resume>,
+): Promise<Resume> {
   const { data } = await api.put(`/resumes/${id}`, patch);
   return data.resume;
 }
@@ -52,7 +64,11 @@ export interface CompileOutcome {
 /** Compile raw LaTeX to a PDF blob URL, or return structured errors on failure. */
 export async function compileLatex(latex: string): Promise<CompileOutcome> {
   try {
-    const response = await api.post("/compile", { latex }, { responseType: "arraybuffer", validateStatus: () => true });
+    const response = await api.post(
+      "/compile",
+      { latex },
+      { responseType: "arraybuffer", validateStatus: () => true },
+    );
 
     const contentType = String(response.headers["content-type"] ?? "");
     if (contentType.includes("application/pdf")) {
@@ -65,7 +81,10 @@ export async function compileLatex(latex: string): Promise<CompileOutcome> {
     const parsed = JSON.parse(text);
     return { success: false, log: parsed.log, errors: parsed.errors };
   } catch (err: any) {
-    return { success: false, errors: [{ message: err?.message || "Network error while compiling." }] };
+    return {
+      success: false,
+      errors: [{ message: err?.message || "Network error while compiling." }],
+    };
   }
 }
 

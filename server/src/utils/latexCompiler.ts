@@ -18,7 +18,12 @@ export interface CompileResult {
  */
 const ENGINE = process.env.LATEX_ENGINE || "tectonic";
 
-function runCommand(cmd: string, args: string[], cwd: string, timeoutMs = 25000): Promise<{ code: number | null; stdout: string; stderr: string }> {
+function runCommand(
+  cmd: string,
+  args: string[],
+  cwd: string,
+  timeoutMs = 25000,
+): Promise<{ code: number | null; stdout: string; stderr: string }> {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, args, { cwd, timeout: timeoutMs });
     let stdout = "";
@@ -62,7 +67,11 @@ export async function compileLatex(source: string): Promise<CompileResult> {
     let result: { code: number | null; stdout: string; stderr: string };
 
     if (ENGINE === "tectonic") {
-      result = await runCommand("tectonic", ["-X", "compile", "main.tex", "--outdir", workDir], workDir);
+      result = await runCommand(
+        "tectonic",
+        ["-X", "compile", "main.tex", "--outdir", workDir],
+        workDir,
+      );
     } else {
       // pdflatex, run twice for refs/toc stability, non-interactive
       const args = ["-interaction=nonstopmode", "-halt-on-error", "main.tex"];
@@ -87,7 +96,11 @@ export async function compileLatex(source: string): Promise<CompileResult> {
         errors: [{ message: `LaTeX engine "${ENGINE}" not found.` }],
       };
     }
-    return { success: false, log: String(err), errors: [{ message: String(err) }] };
+    return {
+      success: false,
+      log: String(err),
+      errors: [{ message: String(err) }],
+    };
   } finally {
     fs.rm(workDir, { recursive: true, force: true }).catch(() => {});
   }

@@ -6,9 +6,11 @@ export function generateModernLatex(data: ResumeData): string {
 
   const contactLine = [
     contact.location && escapeLatex(contact.location),
-    contact.email && `\\href{mailto:${contact.email}}{${escapeLatex(contact.email)}}`,
+    contact.email &&
+      `\\href{mailto:${contact.email}}{${escapeLatex(contact.email)}}`,
     contact.phone && escapeLatex(contact.phone),
-    contact.website && `\\href{${contact.website}}{${escapeLatex(contact.website.replace(/^https?:\/\//, ""))}}`,
+    contact.website &&
+      `\\href{${contact.website}}{${escapeLatex(contact.website.replace(/^https?:\/\//, ""))}}`,
     contact.linkedin && `\\href{${contact.linkedin}}{LinkedIn}`,
     contact.github && `\\href{${contact.github}}{GitHub}`,
   ]
@@ -22,14 +24,19 @@ export function generateModernLatex(data: ResumeData): string {
 
   const education = data.education
     .map(
-      (e) => `\\textbf{${escapeLatex(e.school)}} \\hfill ${escapeLatex(e.startDate)} -- ${escapeLatex(e.endDate)}\\\\
-\\textit{${escapeLatex(e.degree)}} \\hfill ${escapeLatex(e.location ?? "")}\\\\[4pt]`
+      (
+        e,
+      ) => `\\textbf{${escapeLatex(e.school)}} \\hfill ${escapeLatex(e.startDate)} -- ${escapeLatex(e.endDate)}\\\\
+\\textit{${escapeLatex(e.degree)}} \\hfill ${escapeLatex(e.location ?? "")}\\\\[4pt]`,
     )
     .join("\n");
 
   const experience = data.experience
     .map((e) => {
-      const bullets = e.bullets.filter(Boolean).map((b) => `  \\item ${escapeLatex(b)}`).join("\n");
+      const bullets = e.bullets
+        .filter(Boolean)
+        .map((b) => `  \\item ${escapeLatex(b)}`)
+        .join("\n");
       return `\\textbf{${escapeLatex(e.role)}}, ${escapeLatex(e.company)} \\hfill ${escapeLatex(e.startDate)} -- ${escapeLatex(e.endDate)}\\\\
 ${e.location ? `\\textit{${escapeLatex(e.location)}}\\\\[2pt]` : ""}
 ${bullets ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets}\n\\end{itemize}` : ""}
@@ -39,7 +46,10 @@ ${bullets ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets
 
   const projects = data.projects
     .map((p) => {
-      const bullets = p.bullets.filter(Boolean).map((b) => `  \\item ${escapeLatex(b)}`).join("\n");
+      const bullets = p.bullets
+        .filter(Boolean)
+        .map((b) => `  \\item ${escapeLatex(b)}`)
+        .join("\n");
       return `\\textbf{${escapeLatex(p.name)}}${p.tech ? ` \\textit{(${escapeLatex(p.tech)})}` : ""}${p.link ? ` \\hfill \\href{${p.link}}{link}` : ""}\\\\
 ${bullets ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets}\n\\end{itemize}` : ""}
 \\vspace{4pt}`;
@@ -47,14 +57,25 @@ ${bullets ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets
     .join("\n");
 
   const skills = data.skills
-    .map((s) => `\\textbf{${escapeLatex(s.category)}:} ${s.items.map(escapeLatex).join(", ")}\\\\[2pt]`)
+    .map(
+      (s) =>
+        `\\textbf{${escapeLatex(s.category)}:} ${s.items.map(escapeLatex).join(", ")}\\\\[2pt]`,
+    )
     .join("\n");
 
   const customSections = (data.customSections ?? [])
     .filter((sec) => sec.title.trim())
     .map((sec) => {
-      const bullets = sec.bullets.filter(Boolean).map((b) => `  \\item ${escapeLatex(b)}`).join("\n");
-      return section(sec.title, bullets ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets}\n\\end{itemize}` : "");
+      const bullets = sec.bullets
+        .filter(Boolean)
+        .map((b) => `  \\item ${escapeLatex(b)}`)
+        .join("\n");
+      return section(
+        sec.title,
+        bullets
+          ? `\\begin{itemize}[topsep=2pt,itemsep=1pt,leftmargin=16pt]\n${bullets}\n\\end{itemize}`
+          : "",
+      );
     })
     .join("\n");
 

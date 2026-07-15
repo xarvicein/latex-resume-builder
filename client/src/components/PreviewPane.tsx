@@ -21,7 +21,10 @@ export default function PreviewPane() {
           <ul>
             {compileErrors.map((err, i) => (
               <li key={i}>
-                {err.line ? <span className="err-line">Line {err.line}:</span> : null} {err.message}
+                {err.line ? (
+                  <span className="err-line">Line {err.line}:</span>
+                ) : null}{" "}
+                {err.message}
               </li>
             ))}
           </ul>
@@ -40,7 +43,9 @@ export default function PreviewPane() {
 
       {!isCompiling && compileErrors.length === 0 && !pdfUrl && (
         <div className="preview-empty">
-          <p>Hit <strong>Compile ▶</strong> to render your resume as a PDF.</p>
+          <p>
+            Hit <strong>Compile ▶</strong> to render your resume as a PDF.
+          </p>
         </div>
       )}
     </div>

@@ -9,10 +9,28 @@ export const generators: Record<TemplateId, (data: ResumeData) => string> = {
   compact: generateCompactLatex,
 };
 
-export const templateMeta: { id: TemplateId; name: string; description: string }[] = [
-  { id: "classic", name: "Classic", description: "Timeless serif layout, the most common ATS-friendly resume style." },
-  { id: "modern", name: "Modern", description: "Sans-serif with a color accent, good for design/product roles." },
-  { id: "compact", name: "Compact", description: "Dense single-column layout to fit more on one page." },
+export const templateMeta: {
+  id: TemplateId;
+  name: string;
+  description: string;
+}[] = [
+  {
+    id: "classic",
+    name: "Classic",
+    description:
+      "Timeless serif layout, the most common ATS-friendly resume style.",
+  },
+  {
+    id: "modern",
+    name: "Modern",
+    description:
+      "Sans-serif with a color accent, good for design/product roles.",
+  },
+  {
+    id: "compact",
+    name: "Compact",
+    description: "Dense single-column layout to fit more on one page.",
+  },
 ];
 
 export const sampleResumeData: ResumeData = {
@@ -36,7 +54,10 @@ export const sampleResumeData: ResumeData = {
       location: "Berkeley, CA",
       startDate: "Aug 2016",
       endDate: "May 2020",
-      details: ["GPA: 3.8/4.0", "Relevant coursework: Algorithms, Distributed Systems, Databases"],
+      details: [
+        "GPA: 3.8/4.0",
+        "Relevant coursework: Algorithms, Distributed Systems, Databases",
+      ],
     },
   ],
   experience: [
@@ -72,19 +93,33 @@ export const sampleResumeData: ResumeData = {
       name: "OpenTasks",
       tech: "React, Node.js, PostgreSQL",
       link: "https://github.com/jordanrivera/opentasks",
-      bullets: ["Open-source task manager with 1.2k GitHub stars", "Implemented real-time sync via WebSockets"],
+      bullets: [
+        "Open-source task manager with 1.2k GitHub stars",
+        "Implemented real-time sync via WebSockets",
+      ],
     },
   ],
   skills: [
-    { id: "skill1", category: "Languages", items: ["TypeScript", "Python", "Go"] },
-    { id: "skill2", category: "Frameworks", items: ["React", "Express", "Django"] },
+    {
+      id: "skill1",
+      category: "Languages",
+      items: ["TypeScript", "Python", "Go"],
+    },
+    {
+      id: "skill2",
+      category: "Frameworks",
+      items: ["React", "Express", "Django"],
+    },
     { id: "skill3", category: "Tools", items: ["Docker", "PostgreSQL", "AWS"] },
   ],
   customSections: [
     {
       id: "cs1",
       title: "Certifications",
-      bullets: ["AWS Certified Solutions Architect – Associate", "Certified Kubernetes Administrator (CKA)"],
+      bullets: [
+        "AWS Certified Solutions Architect – Associate",
+        "Certified Kubernetes Administrator (CKA)",
+      ],
     },
   ],
 };
