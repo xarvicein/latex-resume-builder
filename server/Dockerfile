@@ -2,17 +2,25 @@ FROM node:20-bookworm-slim AS base
 
 # --- Tectonic (self-contained LaTeX binary, no TeX Live needed) ---
 # We pin a specific release and use the musl-linked build, which is *statically linked*.
-# This avoids two classes of problems seen with the dynamically-linked gnu build:
-# missing shared libraries at runtime (libgraphite2, libharfbuzz, etc.) AND glibc
-# version mismatches between the CI machine that built the binary and this image's
-# glibc (bookworm's glibc is too old for binaries built against newer glibc).
+# This avoids missing shared libraries (libgraphite2, libharfbuzz, etc.) and glibc
+# version mismatches between the CI machine that built the binary and this image's glibc.
+#
+# fontconfig is still required at runtime even with the static binary: Tectonic's XeTeX
+# engine dlopens libfontconfig to discover fonts, and needs /etc/fonts/fonts.conf plus an
+# actual font cache to exist on disk, or it fails with "Cannot load default config file".
+# We install fontconfig + a small base font set and build the cache with fc-cache.
 ARG TECTONIC_VERSION=0.16.9
-RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl \
+    fontconfig \
+    fonts-liberation \
+    fonts-dejavu-core \
     && curl -L -o /tmp/tectonic.tar.gz \
-      "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+    "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
     && tar -xzf /tmp/tectonic.tar.gz -C /usr/local/bin \
     && chmod +x /usr/local/bin/tectonic \
     && rm /tmp/tectonic.tar.gz \
+    && fc-cache -f -v \
     && apt-get purge -y curl \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
