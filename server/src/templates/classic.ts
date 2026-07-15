@@ -109,6 +109,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\usepackage{fancyhdr}
 \\usepackage[english]{babel}
 \\usepackage{tabularx}
+\\usepackage{ragged2e}
 
 \\pagestyle{fancy}
 \\fancyhf{}
@@ -161,7 +162,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
   \\small ${joinContactLine(data)}
 \\end{center}
 
-${data.summary ? `\\section*{Summary}\n\\small{${escapeLatex(data.summary)}}\n` : ""}
+${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n` : ""}
 
 ${
   data.skills.length
