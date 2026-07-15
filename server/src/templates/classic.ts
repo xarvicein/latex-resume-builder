@@ -22,7 +22,10 @@ function joinContactLine(data: ResumeData): string {
   if (c.location) parts.push(escapeLatex(c.location));
   if (c.email) parts.push(`\\href{mailto:${c.email}}{${escapeLatex(c.email)}}`);
   if (c.phone) parts.push(escapeLatex(c.phone));
-  if (c.website) parts.push(`\\href{${c.website}}{${escapeLatex(c.website.replace(/^https?:\/\//, ""))}}`);
+  if (c.website)
+    parts.push(
+      `\\href{${c.website}}{${escapeLatex(c.website.replace(/^https?:\/\//, ""))}}`,
+    );
   if (c.linkedin) parts.push(`\\href{${c.linkedin}}{LinkedIn}`);
   if (c.github) parts.push(`\\href{${c.github}}{GitHub}`);
   return parts.join(" \\;|\\; ");
@@ -63,7 +66,9 @@ ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
         .filter(Boolean)
         .map((b) => `    \\item ${escapeLatex(b)}`)
         .join("\n");
-      const header = p.tech ? `${escapeLatex(p.name)} $|$ \\emph{${escapeLatex(p.tech)}}` : escapeLatex(p.name);
+      const header = p.tech
+        ? `${escapeLatex(p.name)} $|$ \\emph{${escapeLatex(p.tech)}}`
+        : escapeLatex(p.name);
       return `\\resumeProjectHeading
   {\\textbf{${header}}}{${p.link ? `\\href{${p.link}}{link}` : ""}}
 ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
@@ -71,7 +76,10 @@ ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
     .join("\n");
 
   const skillsBlock = data.skills
-    .map((s) => `  \\textbf{${escapeLatex(s.category)}}{: ${s.items.map(escapeLatex).join(", ")}} \\\\`)
+    .map(
+      (s) =>
+        `  \\textbf{${escapeLatex(s.category)}}{: ${s.items.map(escapeLatex).join(", ")}} \\\\`,
+    )
     .join("\n");
 
   return `%% Auto-generated resume - Classic template
@@ -113,7 +121,7 @@ ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
 
 \\newcommand{\\resumeSubheading}[4]{
   \\vspace{-2pt}\\item
-    \\begin{tabular*}{0.97\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
+    \\begin{tabular*}{\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
       \\textbf{#1} & #2 \\\\
       \\textit{\\small#3} & \\textit{\\small #4} \\\\
     \\end{tabular*}\\vspace{-7pt}
@@ -121,14 +129,14 @@ ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
 
 \\newcommand{\\resumeProjectHeading}[2]{
     \\item
-    \\begin{tabular*}{0.97\\textwidth}{l@{\\extracolsep{\\fill}}r}
+    \\begin{tabular*}{\\textwidth}{l@{\\extracolsep{\\fill}}r}
       \\small#1 & #2 \\\\
     \\end{tabular*}\\vspace{-7pt}
 }
 
 \\renewcommand\\labelitemii{$\\vcenter{\\hbox{\\tiny$\\bullet$}}$}
 
-\\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0.15in, label={}]}
+\\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0in, label={}]}
 \\newcommand{\\resumeSubHeadingListEnd}{\\end{itemize}}
 \\newcommand{\\resumeItemListStart}{\\begin{itemize}}
 \\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-5pt}}
@@ -143,27 +151,43 @@ ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
 
 ${data.summary ? `\\section*{Summary}\n\\small{${escapeLatex(data.summary)}}\n` : ""}
 
-${data.education.length ? `\\section{Education}
-\\resumeSubHeadingListStart
-${educationBlock}
-\\resumeSubHeadingListEnd` : ""}
-
-${data.experience.length ? `\\section{Experience}
-\\resumeSubHeadingListStart
-${experienceBlock}
-\\resumeSubHeadingListEnd` : ""}
-
-${data.projects.length ? `\\section{Projects}
-\\resumeSubHeadingListStart
-${projectsBlock}
-\\resumeSubHeadingListEnd` : ""}
-
-${data.skills.length ? `\\section{Skills}
+${
+  data.skills.length
+    ? `\\section{Skills}
 \\small{
 \\begin{tabular*}{\\textwidth}{l}
 ${skillsBlock}
 \\end{tabular*}
-}` : ""}
+}`
+    : ""
+}
+
+${
+  data.experience.length
+    ? `\\section{Experience}
+\\resumeSubHeadingListStart
+${experienceBlock}
+\\resumeSubHeadingListEnd`
+    : ""
+}
+
+${
+  data.projects.length
+    ? `\\section{Projects}
+\\resumeSubHeadingListStart
+${projectsBlock}
+\\resumeSubHeadingListEnd`
+    : ""
+}
+
+${
+  data.education.length
+    ? `\\section{Education}
+\\resumeSubHeadingListStart
+${educationBlock}
+\\resumeSubHeadingListEnd`
+    : ""
+}
 
 \\end{document}
 `;
