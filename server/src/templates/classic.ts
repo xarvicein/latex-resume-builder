@@ -78,9 +78,9 @@ ${bullets ? `  \\resumeItemListStart\n${bullets}\n  \\resumeItemListEnd` : ""}`;
   const skillsBlock = data.skills
     .map(
       (s) =>
-        `  \\textbf{${escapeLatex(s.category)}}{: ${s.items.map(escapeLatex).join(", ")}} \\\\`,
+        `  \\textbf{${escapeLatex(s.category)}}{: ${s.items.map(escapeLatex).join(", ")}}`,
     )
-    .join("\n");
+    .join(" \\\\\n");
 
   const customSectionsBlock = (data.customSections ?? [])
     .filter((sec) => sec.title.trim())
