@@ -178,16 +178,17 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
   \\small ${joinContactLine(data)}
 \\end{center}
 
-${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n` : ""}
+${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n\\vspace{-6pt}\n` : ""}
 
 ${
   data.skills.length
     ? `\\section{Technical Skills}
- \\begin{itemize}[leftmargin=0in, label={}]
+ \\begin{itemize}[leftmargin=0in, label={}, itemsep=0pt, parsep=0pt, topsep=0pt, partopsep=0pt]
   \\small{\\item{
 ${skillsBlock}
   }}
- \\end{itemize}`
+ \\end{itemize}
+\\vspace{-6pt}`
     : ""
 }
 
