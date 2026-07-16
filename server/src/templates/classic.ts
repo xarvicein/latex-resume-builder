@@ -110,6 +110,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\usepackage[english]{babel}
 \\usepackage{tabularx}
 \\usepackage{ragged2e}
+\\usepackage{microtype}
 
 \\pagestyle{fancy}
 \\fancyhf{}
