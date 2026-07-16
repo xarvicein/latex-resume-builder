@@ -197,7 +197,8 @@ ${
     ? `\\section{Experience}
 \\resumeSubHeadingListStart
 ${experienceBlock}
-\\resumeSubHeadingListEnd`
+\\resumeSubHeadingListEnd
+\\vspace{-6pt}`
     : ""
 }
 
@@ -206,7 +207,8 @@ ${
     ? `\\section{Projects}
 \\resumeSubHeadingListStart
 ${projectsBlock}
-\\resumeSubHeadingListEnd`
+\\resumeSubHeadingListEnd
+\\vspace{-6pt}`
     : ""
 }
 
@@ -215,11 +217,12 @@ ${
     ? `\\section{Education}
 \\resumeSubHeadingListStart
 ${educationBlock}
-\\resumeSubHeadingListEnd`
+\\resumeSubHeadingListEnd
+\\vspace{-6pt}`
     : ""
 }
 
-${customSectionsBlock}
+${customSectionsBlock ? `${customSectionsBlock}\n\\vspace{-6pt}` : ""}
 
 \\end{document}
 `;
