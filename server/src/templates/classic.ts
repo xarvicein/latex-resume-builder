@@ -96,7 +96,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 
   return `%% Auto-generated resume - Classic template
 %% You can edit this LaTeX directly; it will stop auto-syncing with the form.
-\\documentclass[letterpaper,12pt]{article}
+\\documentclass[b4paper,12pt]{article}
 
 \\usepackage{latexsym}
 \\usepackage[empty]{fullpage}
@@ -129,7 +129,8 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\raggedright
 \\setlength{\\tabcolsep}{0in}
 
-\\titleformat{\\section}{\\vspace{-4pt}\\bfseries\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule \\vspace{-5pt}]
+\\titleformat{\\section}{\\vspace{-4pt}\\bfseries\\raggedright\\fontsize{12pt}{14pt}\\selectfont}{}{0em}{\\MakeUppercase}[\\color{black}\\titlerule \\vspace{-5pt}]
+\\titlespacing*{\\section}{0pt}{4pt}{3pt}
 
 \\newcommand{\\resumeItem}[1]{\\item\\small{#1 \\vspace{-2pt}}}
 
