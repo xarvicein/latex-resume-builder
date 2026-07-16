@@ -130,7 +130,6 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\setlength{\\tabcolsep}{0in}
 
 \\titleformat{\\section}{\\vspace{-4pt}\\bfseries\\raggedright\\fontsize{12pt}{14pt}\\selectfont}{}{0em}{\\MakeUppercase}[\\color{black}\\titlerule \\vspace{-5pt}]
-\\titlespacing*{\\section}{0pt}{4pt}{3pt}
 
 \\newcommand{\\resumeItem}[1]{\\item\\small{#1 \\vspace{-2pt}}}
 
