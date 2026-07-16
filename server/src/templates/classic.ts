@@ -129,7 +129,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\raggedright
 \\setlength{\\tabcolsep}{0in}
 
-\\titleformat{\\section}{\\vspace{-4pt}\\scshape\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule \\vspace{-5pt}]
+\\titleformat{\\section}{\\vspace{-4pt}\\bfseries\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule \\vspace{-5pt}]
 
 \\newcommand{\\resumeItem}[1]{\\item\\small{#1 \\vspace{-2pt}}}
 
@@ -159,7 +159,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 
 \\begin{center}
   \\textbf{\\Huge \\scshape ${escapeLatex(contact.fullName)}} \\\\ \\vspace{2pt}
-  ${contact.title ? `\\textit{${escapeLatex(contact.title)}} \\\\ \\vspace{2pt}` : ""}
+  ${contact.title ? `\\textbf{\\large ${escapeLatex(contact.title)}} \\\\ \vspace{2pt}` : ""}
   \\small ${joinContactLine(data)}
 \\end{center}
 
