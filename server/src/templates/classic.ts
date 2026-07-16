@@ -140,23 +140,23 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\newcommand{\\resumeItem}[1]{\\item\\small{#1 \\vspace{-2pt}}}
 
 \\newcommand{\\resumeSubheading}[4]{
-  \\vspace{-2pt}\\item
-    \\begin{tabular*}{\\textwidth}[t]{l@{\\extracolsep{\\fill}}r}
+  \\vspace{-2pt}
+    \\begin{tabular*}{\\linewidth}[t]{l@{\\extracolsep{\\fill}}r}
       \\textbf{#1} & #2 \\\\
       \\textit{\\small#3} & \\textit{\\small #4} \\\\
     \\end{tabular*}\\vspace{-7pt}
 }
 
 \\newcommand{\\resumeSubSubheading}[2]{
-    \\item
-    \\begin{tabular*}{\\textwidth}{l@{\\extracolsep{\\fill}}r}
+    \\vspace{-2pt}
+    \\begin{tabular*}{\\linewidth}{l@{\\extracolsep{\\fill}}r}
       \\textit{\\small#1} & \\textit{\\small #2} \\\\
     \\end{tabular*}\\vspace{-7pt}
 }
 
 \\newcommand{\\resumeProjectHeading}[2]{
-    \\item
-    \\begin{tabular*}{\\textwidth}{l@{\\extracolsep{\\fill}}r}
+    \\vspace{-2pt}
+    \\begin{tabular*}{\\linewidth}{l@{\\extracolsep{\\fill}}r}
       \\small#1 & #2 \\\\
     \\end{tabular*}\\vspace{-7pt}
 }
@@ -165,9 +165,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 
 \\renewcommand\\labelitemii{$\\vcenter{\\hbox{\\tiny$\\bullet$}}$}
 
-\\newcommand{\\resumeSubHeadingListStart}{\\begin{itemize}[leftmargin=0in, label={}]}
-\\newcommand{\\resumeSubHeadingListEnd}{\\end{itemize}}
-\\newcommand{\\resumeItemListStart}{\\begin{itemize}[leftmargin=0.15in, itemsep=2pt, parsep=0pt, topsep=4pt, partopsep=0pt]}
+\\newcommand{\\resumeItemListStart}{\\begin{itemize}[leftmargin=0.25in, itemsep=2pt, parsep=0pt, topsep=4pt, partopsep=0pt]}
 \\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-6pt}}
 
 \\begin{document}
@@ -178,7 +176,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
   \\small ${joinContactLine(data)}
 \\end{center}
 
-${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n\\vspace{-6pt}` : ""}
+${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright` : ""}
 
 ${
   data.skills.length
@@ -187,42 +185,35 @@ ${
   \\small{\\item{
 ${skillsBlock}
   }}
- \\end{itemize}
-  \\vspace{-6pt}`
+ \\end{itemize}`
     : ""
 }
 
 ${
   data.experience.length
     ? `\\section{Experience}
-\\resumeSubHeadingListStart
 ${experienceBlock}
-\\resumeSubHeadingListEnd
-\\vspace{-6pt}`
+`
     : ""
 }
 
 ${
   data.projects.length
     ? `\\section{Projects}
-\\resumeSubHeadingListStart
 ${projectsBlock}
-\\resumeSubHeadingListEnd
-\\vspace{-6pt}`
+`
     : ""
 }
 
 ${
   data.education.length
     ? `\\section{Education}
-\\resumeSubHeadingListStart
 ${educationBlock}
-\\resumeSubHeadingListEnd
-\\vspace{-6pt}`
+`
     : ""
 }
 
-${customSectionsBlock ? `${customSectionsBlock}\n\\vspace{-6pt}` : ""}
+${customSectionsBlock}
 
 \\end{document}
 `;
