@@ -135,7 +135,8 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\pdfgentounicode=1
 \\fi
 
-\\titleformat{\\section}{\\vspace{-4pt}\\scshape\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule \\vspace{-5pt}]
+\\titleformat{\\section}{\\scshape\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule]
+\\titlespacing*{\\section}{0pt}{0pt}{2pt}
 
 \\newcommand{\\resumeItem}[1]{\\item\\small{#1 \\vspace{-2pt}}}
 
@@ -144,29 +145,29 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
     \\begin{tabular*}{\\linewidth}[t]{l@{\\extracolsep{\\fill}}r}
       \\textbf{#1} & #2 \\\\
       \\textit{\\small#3} & \\textit{\\small #4} \\\\
-    \\end{tabular*}\\vspace{-7pt}
+    \\end{tabular*}\\vspace{-4pt}
 }
 
 \\newcommand{\\resumeSubSubheading}[2]{
     \\vspace{-2pt}
     \\begin{tabular*}{\\linewidth}{l@{\\extracolsep{\\fill}}r}
       \\textit{\\small#1} & \\textit{\\small #2} \\\\
-    \\end{tabular*}\\vspace{-7pt}
+    \\end{tabular*}\\vspace{-4pt}
 }
 
 \\newcommand{\\resumeProjectHeading}[2]{
     \\vspace{-2pt}
     \\begin{tabular*}{\\linewidth}{l@{\\extracolsep{\\fill}}r}
       \\small#1 & #2 \\\\
-    \\end{tabular*}\\vspace{-7pt}
+    \\end{tabular*}\\vspace{-4pt}
 }
 
 \\newcommand{\\resumeSubItem}[1]{\\resumeItem{#1}\\vspace{-4pt}}
 
 \\renewcommand\\labelitemii{$\\vcenter{\\hbox{\\tiny$\\bullet$}}$}
 
-\\newcommand{\\resumeItemListStart}{\\begin{itemize}[leftmargin=0.25in, itemsep=2pt, parsep=0pt, topsep=4pt, partopsep=0pt]}
-\\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{-6pt}}
+\\newcommand{\\resumeItemListStart}{\\begin{itemize}[leftmargin=0.25in, itemsep=2pt, parsep=0pt, topsep=6pt, partopsep=0pt]}
+\\newcommand{\\resumeItemListEnd}{\\end{itemize}\\vspace{2pt}}
 
 \\begin{document}
 
