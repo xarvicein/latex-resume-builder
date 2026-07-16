@@ -182,12 +182,12 @@ ${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.su
 
 ${
   data.skills.length
-    ? `\\section{Skills}
-\\small{
-\\begin{tabular*}{\\textwidth}{l}
+    ? `\\section{Technical Skills}
+ \\begin{itemize}[leftmargin=0in, label={}]
+  \\small{\\item{
 ${skillsBlock}
-\\end{tabular*}
-}`
+  }}
+ \\end{itemize}`
     : ""
 }
 
