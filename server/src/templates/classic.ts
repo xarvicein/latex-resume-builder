@@ -107,11 +107,11 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\usepackage{enumitem}
 \\usepackage[hidelinks]{hyperref}
 \\usepackage{fancyhdr}
+\\usepackage{iftex}
 \\usepackage[english]{babel}
 \\usepackage{tabularx}
 \\usepackage{ragged2e}
 \\usepackage{microtype}
-\\input{glyphtounicode}
 
 \\pagestyle{fancy}
 \\fancyhf{}
@@ -130,9 +130,12 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\raggedright
 \\setlength{\\tabcolsep}{0in}
 
-\\titleformat{\\section}{\\vspace{-4pt}\\scshape\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule \\vspace{-5pt}]
-
+\\ifPDFTeX
+\\input{glyphtounicode}
 \\pdfgentounicode=1
+\\fi
+
+\\titleformat{\\section}{\\vspace{-4pt}\\scshape\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule \\vspace{-5pt}]
 
 \\newcommand{\\resumeItem}[1]{\\item\\small{#1 \\vspace{-2pt}}}
 
