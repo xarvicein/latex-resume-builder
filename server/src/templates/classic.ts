@@ -177,7 +177,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
   \\small ${joinContactLine(data)}
 \\end{center}
 
-${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n\\vspace{5pt}` : ""}
+${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n\\vspace{7pt}` : ""}
 
 ${
   data.skills.length
@@ -187,7 +187,7 @@ ${
 ${skillsBlock}
   }}
  \\end{itemize}
-\\vspace{5pt}`
+\\vspace{7pt}`
     : ""
 }
 
