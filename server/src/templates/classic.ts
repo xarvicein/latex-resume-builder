@@ -178,7 +178,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
   \\small ${joinContactLine(data)}
 \\end{center}
 
-${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n` : ""}
+${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n\\vspace{-6pt}` : ""}
 
 ${
   data.skills.length
@@ -188,7 +188,7 @@ ${
 ${skillsBlock}
   }}
  \\end{itemize}
-\\vspace{-3pt}`
+  \\vspace{-6pt}`
     : ""
 }
 
@@ -197,7 +197,8 @@ ${
     ? `\\section{Experience}
 \\resumeSubHeadingListStart
 ${experienceBlock}
-\\resumeSubHeadingListEnd`
+\\resumeSubHeadingListEnd
+\\vspace{-6pt}`
     : ""
 }
 
@@ -206,7 +207,8 @@ ${
     ? `\\section{Projects}
 \\resumeSubHeadingListStart
 ${projectsBlock}
-\\resumeSubHeadingListEnd`
+\\resumeSubHeadingListEnd
+\\vspace{-6pt}`
     : ""
 }
 
@@ -215,11 +217,12 @@ ${
     ? `\\section{Education}
 \\resumeSubHeadingListStart
 ${educationBlock}
-\\resumeSubHeadingListEnd`
+\\resumeSubHeadingListEnd
+\\vspace{-6pt}`
     : ""
 }
 
-${customSectionsBlock}
+${customSectionsBlock ? `${customSectionsBlock}\n\\vspace{-6pt}` : ""}
 
 \\end{document}
 `;
