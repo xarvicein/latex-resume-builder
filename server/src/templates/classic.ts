@@ -135,7 +135,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 \\pdfgentounicode=1
 \\fi
 
-\\titleformat{\\section}{\\scshape\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule]
+\\titleformat{\\section}{\\scshape\\raggedright\\large}{}{0em}{}[\\color{black}\\titlerule \\vspace{3pt}]
 \\titlespacing*{\\section}{0pt}{0pt}{2pt}
 
 \\newcommand{\\resumeItem}[1]{\\item\\small{#1 \\vspace{-2pt}}}
@@ -177,7 +177,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
   \\small ${joinContactLine(data)}
 \\end{center}
 
-${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright` : ""}
+${data.summary ? `\\section*{Summary}\n\\justifying\\small{${escapeLatex(data.summary)}}\n\\raggedright\n\\vspace{3pt}` : ""}
 
 ${
   data.skills.length
@@ -186,7 +186,8 @@ ${
   \\small{\\item{
 ${skillsBlock}
   }}
- \\end{itemize}`
+ \\end{itemize}
+\\vspace{3pt}`
     : ""
 }
 
