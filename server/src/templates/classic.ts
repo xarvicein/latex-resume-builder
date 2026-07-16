@@ -159,7 +159,7 @@ ${bullets ? `\\resumeItemListStart\n${bullets}\n\\resumeItemListEnd` : ""}`;
 
 \\begin{center}
   \\textbf{\\Huge \\scshape ${escapeLatex(contact.fullName)}} \\\\ \\vspace{2pt}
-  ${contact.title ? `\\textbf{\\large ${escapeLatex(contact.title)}} \\\\ \vspace{2pt}` : ""}
+  ${contact.title ? `\\textbf{\\large ${escapeLatex(contact.title)}} \\\\ \\vspace{2pt}` : ""}
   \\small ${joinContactLine(data)}
 \\end{center}
 
